@@ -21,7 +21,7 @@ working_directory = r"C:\Users\lawashburn\Documents\LiP-MS\EarlyFilter\Results"
 #up_thresh = input('Enter upregulated peptide threshold (recommended is 2): ')
 #down_thresh = input('Enter downregulated peptide threshold (recommended is -0.5): ')
 
-
+#Define cutoff values
 p_cutoff = 0.05
 up_thresh = 1.5
 down_thresh = 2/3
@@ -33,18 +33,15 @@ down_thresh = float(down_thresh)
 ADvCtrl = pd.read_csv(ADvCtrl_path,na_values= '#DIV/0!' )
 ADvMCI = pd.read_csv(ADvMCI_path,na_values= '#DIV/0!' )
 MCIvCtrl = pd.read_csv(MCIvCtrl_path,na_values= '#DIV/0!' )
-
+#Cutoff for p-values
 ADvCtrl_mask = ADvCtrl['p value']<= p_cutoff
 filtered_ADvCtrl = ADvCtrl[ADvCtrl_mask]
-
-
 ADvMCI_mask = ADvMCI['p value']<= p_cutoff
 filtered_ADvMCI = ADvMCI[ADvMCI_mask]
-
-
 MCIvCtrl_mask = MCIvCtrl['p value']<= p_cutoff
 filtered_MCIvCtrl = MCIvCtrl[MCIvCtrl_mask]
 
+#Filter for fold change
 ADvCtrlUp_mask = filtered_ADvCtrl['AD vs Ctrl fold change']>=up_thresh
 ADvCtrlUp = filtered_ADvCtrl[ADvCtrlUp_mask]
 
@@ -70,7 +67,7 @@ MCIvCtrlUp_out = working_directory + '\\MCIvCtrl_Upregulated.csv'
 ADvCtrlDown_out = working_directory + '\\ADvCtrl_downregulated.csv'
 ADvMCIDown_out = working_directory + '\\ADvMCI_downregulated.csv'
 MCIvCtrlDown_out = working_directory + '\\MCIvCtrl_downregulated.csv'
-
+#Export up and down regulated  files for all samples
 with open(ADvCtrlUp_out,'w',newline='') as filed:
     writerd = csv.writer(filed)
     ADvCtrlUp.to_csv(filed,index=False)
